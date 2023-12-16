@@ -8,8 +8,12 @@ USER root
 
 # Install tools needed for your repo-server to retrieve & decrypt secrets, render manifests 
 RUN apt-get update && \
-    apt-get install -y envsubst && \
-    apt-get clean
+    apt-get install -y curl && \
+    curl -L https://github.com/a8m/envsubst/releases/download/v1.2.0/envsubst-`uname -s`-`uname -m` -o envsubst && \
+    chmod +x envsubst && \
+    mv envsubst /usr/local/bin && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Switch back to non-root user
 USER $ARGOCD_USER_ID
