@@ -11,16 +11,15 @@ ARG TARGETARCH
 USER root
 
 # Install tools needed for your repo-server to retrieve & decrypt secrets, render manifests 
-RUN apt-get update && \
-    apt-get install -y curl && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
 # Workaround for "envsubst" multi-arch binaries
 # curl -L https://github.com/a8m/envsubst/releases/download/v1.2.0/envsubst-`uname -s`-`uname -m`
 # Previous command should be enough but does not work when "uname -m" returns "aarch64" which is the same as "arm64" 
 RUN <<EOT sh
-    echo $TARGETARCH
+    apt-get update && \
+        apt-get install -y curl && \
+        apt-get clean && \
+        rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    
     if [ "$TARGETARCH" = "arm64" ]; then
         curl -L https://github.com/a8m/envsubst/releases/download/v1.4.2/envsubst-Linux-arm64 -o envsubst
     else     
