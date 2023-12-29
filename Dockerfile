@@ -18,7 +18,7 @@ RUN apt-get update && \
 
 # Workaround for "envsubst" multi-arch binaries
 # curl -L https://github.com/a8m/envsubst/releases/download/v1.2.0/envsubst-`uname -s`-`uname -m`
-# Previous command should be enough but does not work when "uname -m" returns "aarch64" wich is the same as "arm64" 
+# Previous command should be enough but does not work when "uname -m" returns "aarch64" which is the same as "arm64" 
 RUN <<EOT sh
     echo $TARGETARCH
     if [ "$TARGETARCH" = "arm64" ]; then
