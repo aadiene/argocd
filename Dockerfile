@@ -4,7 +4,7 @@
 # Replace tag with the appropriate argo version
 FROM argoproj/argocd:v2.6.15
 
-# Retrieve target architecture from --platform (e.g. arm64 or arm64)
+# Retrieve target architecture from --platform (e.g. arm64 or amd64)
 ARG TARGETARCH
 
 # Switch to root for the ability to perform install
@@ -16,7 +16,7 @@ USER root
 # Previous command should be enough but does not work when "uname -m" returns "aarch64" which is the same as "arm64" 
 RUN <<EOT sh
     apt-get update && \
-        apt-get install -y curl && \
+        apt-get install -y curl jq && \
         apt-get clean && \
         rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
     
